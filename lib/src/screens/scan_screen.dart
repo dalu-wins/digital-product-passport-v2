@@ -52,28 +52,7 @@ class _ScanScreenState extends State<ScanScreen> {
           ),
         ],
       ),
-      body: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: _buildQrView(context),
-          ),
-          Positioned(
-            bottom: 150,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(30), // pill shape
-                ),
-                child: Text("Scan a QR-Code"),
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: _buildQrView(context),
     );
   }
 
@@ -92,9 +71,9 @@ class _ScanScreenState extends State<ScanScreen> {
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
         borderColor: Theme.of(context).colorScheme.primary,
-        borderRadius: 10,
+        borderRadius: 20,
         borderLength: 40,
-        borderWidth: 10,
+        borderWidth: 12,
         cutOutSize: scanArea,
       ),
       formatsAllowed: [BarcodeFormat.qrcode],
@@ -111,6 +90,7 @@ class _ScanScreenState extends State<ScanScreen> {
         result = scanData;
         var url = result?.code;
         if (url != null) {
+          // Prevent multiscan, dont forget to start camera again!
           controller.pauseCamera();
           Navigator.push(
             context,
