@@ -50,9 +50,9 @@ class _NavigationState extends State<Navigation> {
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            selectedIcon: Icon(Icons.qr_code),
+            icon: Icon(Icons.qr_code_outlined),
+            label: 'Scan',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.library_books),
@@ -66,13 +66,12 @@ class _NavigationState extends State<Navigation> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: <Widget>[
-          ScanScreen(),
-          LibrarayScreen(),
-          SettingsScreen(),
-        ][currentPageIndex],
-      ),
+      body: <Widget>[
+        // Add SafeArea around screens if content overlaps system's status bar
+        ScanScreen(),
+        LibrarayScreen(),
+        SettingsScreen(),
+      ][currentPageIndex],
     );
   }
 }
