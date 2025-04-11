@@ -1,3 +1,4 @@
+import 'package:digital_product_passport/src/features/scanner/presentation/scanner_widget.dart';
 import 'package:flutter/material.dart';
 
 class ScanScreen extends StatelessWidget {
@@ -5,10 +6,6 @@ class ScanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue, // Full-screen blue box
-      width: double.infinity,
-      height: double.infinity,
-    );
+    return QRViewExample();
   }
 }

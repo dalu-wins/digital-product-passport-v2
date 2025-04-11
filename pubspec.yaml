@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   dynamic_color: ^1.7.0
+  qr_code_scanner_plus: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
