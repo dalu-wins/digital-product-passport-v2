@@ -1,3 +1,2 @@
-# digital_product_passport
-
-A new Flutter project.
+# dpp-v2
+Digital Product Passport reworked in Flutter
