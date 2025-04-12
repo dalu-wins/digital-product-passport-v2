@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:digital_product_passport/src/screens/product/product_screen.dart';
-import 'package:digital_product_passport/src/screens/scan/custom_scan_overlay.dart';
+import 'package:digital_product_passport/src/product/presentation/product_screen.dart';
+import 'package:digital_product_passport/src/scan/presentation/custom_scan_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 

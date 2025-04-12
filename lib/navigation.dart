@@ -1,6 +1,6 @@
-import 'package:digital_product_passport/src/screens/library/libraray_screen.dart';
-import 'package:digital_product_passport/src/screens/scan/scan_screen.dart';
-import 'package:digital_product_passport/src/screens/library/settings_screen.dart';
+import 'package:digital_product_passport/src/library/presentation/libraray_screen.dart';
+import 'package:digital_product_passport/src/scan/presentation/scan_screen.dart';
+import 'package:digital_product_passport/src/settings/presentation/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
