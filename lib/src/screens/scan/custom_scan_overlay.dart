@@ -104,7 +104,8 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
     final borderPaint = Paint()
       ..color = borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = borderWidth;
+      ..strokeWidth = borderWidth
+      ..blendMode = BlendMode.srcOver;
 
     final boxPaint = Paint()
       ..color = borderColor
