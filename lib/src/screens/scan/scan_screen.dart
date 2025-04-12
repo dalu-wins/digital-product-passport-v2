@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:digital_product_passport/src/screens/product_screen.dart';
+import 'package:digital_product_passport/src/screens/product/product_screen.dart';
+import 'package:digital_product_passport/src/screens/scan/custom_scan_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
@@ -52,7 +53,36 @@ class _ScanScreenState extends State<ScanScreen> {
           ),
         ],
       ),
-      body: _buildQrView(context),
+      body: Stack(alignment: Alignment.center, children: [
+        _buildQrView(context),
+        // Text pill below the scan box
+        Positioned(
+          bottom: MediaQuery.of(context).size.height / 2 -
+              250, // Adjusts based on cutOut position
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.circular(50),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 6,
+                  offset: Offset(0, 2),
+                )
+              ],
+            ),
+            child: Text(
+              'Scan a QR code',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 
@@ -69,10 +99,10 @@ class _ScanScreenState extends State<ScanScreen> {
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
+      overlay: CustomQrScannerOverlayShape(
         borderColor: Theme.of(context).colorScheme.primary,
         borderRadius: 20,
-        borderLength: 40,
+        borderLength: 45,
         borderWidth: 12,
         cutOutSize: scanArea,
       ),
