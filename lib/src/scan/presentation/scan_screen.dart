@@ -87,7 +87,7 @@ class _ScanScreenState extends State<ScanScreen> {
       ),
       body: Stack(alignment: Alignment.center, children: [
         _buildQrView(context),
-        ScanLabel(),
+        // TODO: ScanLabel(),
       ]),
     );
   }

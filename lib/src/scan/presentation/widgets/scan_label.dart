@@ -6,9 +6,7 @@ class ScanLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: MediaQuery.of(context).size.height / 2 -
-          250 -
-          16, // Adjusts based on cutOut position
+      top: MediaQuery.of(context).size.height / 2 + 75,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
