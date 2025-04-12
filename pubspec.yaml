@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   dynamic_color: ^1.7.0
   qr_code_scanner_plus: ^2.0.10+1
-  modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
   flutter_test:
