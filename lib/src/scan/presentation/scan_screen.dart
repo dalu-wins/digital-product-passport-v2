@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:digital_product_passport/src/product/presentation/product_screen.dart';
-import 'package:digital_product_passport/src/scan/presentation/custom_scan_overlay.dart';
+import 'package:digital_product_passport/src/scan/presentation/overlay/custom_scan_overlay.dart';
+import 'package:digital_product_passport/src/scan/presentation/widgets/import_options.dart';
+import 'package:digital_product_passport/src/scan/presentation/widgets/scan_label.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
@@ -76,29 +78,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                 ),
                 builder: (BuildContext context) {
-                  return SafeArea(
-                    child: Column(
-                      mainAxisSize:
-                          MainAxisSize.min, // 💡 Damit die Höhe sich anpasst
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.public),
-                          title: Text('Import from URL'),
-                          onTap: () => Navigator.pop(context),
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.photo),
-                          title: Text('Import from Gallery'),
-                          onTap: () => Navigator.pop(context),
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.file_upload),
-                          title: Text('Upload File'),
-                          onTap: () => Navigator.pop(context),
-                        ),
-                      ],
-                    ),
-                  );
+                  return ImportOptions();
                 },
               );
             },
@@ -107,27 +87,7 @@ class _ScanScreenState extends State<ScanScreen> {
       ),
       body: Stack(alignment: Alignment.center, children: [
         _buildQrView(context),
-        // Text pill below the scan box
-        Positioned(
-          bottom: MediaQuery.of(context).size.height / 2 -
-              250 -
-              16, // Adjusts based on cutOut position
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Text(
-              'Scan a QR code',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ),
+        ScanLabel(),
       ]),
     );
   }
