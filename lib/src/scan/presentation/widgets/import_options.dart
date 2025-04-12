@@ -12,7 +12,7 @@ class ImportOptions extends StatelessWidget {
         children: [
           ListTile(
             leading: Icon(Icons.public),
-            title: Text('Import from URL'),
+            title: Text('Enter URL'),
             onTap: () => {
               Navigator.pop(context),
               showDialog(

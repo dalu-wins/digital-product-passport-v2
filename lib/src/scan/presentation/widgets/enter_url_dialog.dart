@@ -10,10 +10,21 @@ class EnterUrlDialog extends StatefulWidget {
 
 class _EnterUrlDialogState extends State<EnterUrlDialog> {
   final TextEditingController _urlController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // Schedule focus request after the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+  }
 
   @override
   void dispose() {
     _urlController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -43,9 +54,11 @@ class _EnterUrlDialogState extends State<EnterUrlDialog> {
           Expanded(
             child: TextField(
               controller: _urlController,
+              focusNode: _focusNode,
               decoration: const InputDecoration(
                 hintText: "https://example.com",
               ),
+              onSubmitted: (_) => _handleSubmit(),
             ),
           ),
           const SizedBox(width: 12),
