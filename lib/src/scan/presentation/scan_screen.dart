@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:digital_product_passport/src/product/presentation/product_screen.dart';
 import 'package:digital_product_passport/src/scan/presentation/overlay/custom_scan_overlay.dart';
 import 'package:digital_product_passport/src/scan/presentation/widgets/import_options.dart';
-import 'package:digital_product_passport/src/scan/presentation/widgets/scan_label.dart';
+// import 'package:digital_product_passport/src/scan/presentation/widgets/scan_label.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
@@ -19,7 +19,7 @@ class _ScanScreenState extends State<ScanScreen> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  bool _hasScanned = false;
+  String? _lastScanned;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -118,17 +118,18 @@ class _ScanScreenState extends State<ScanScreen> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      if (_hasScanned) return;
-      _hasScanned = true;
+      // Scanne nicht doppelt
+      if (_lastScanned == scanData.code!) return;
 
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ProductScreen(url: scanData.code!),
         ),
-      ).then((_) {
-        _hasScanned = false;
-      });
+      );
+
+      // Update damit nicht doppelt gescanned wird
+      _lastScanned == scanData.code!;
     });
   }
 
