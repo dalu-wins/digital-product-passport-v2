@@ -12,7 +12,6 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   late Future<String?> _dataFuture;
-  bool _hasShownError = false;
 
   @override
   void initState() {
@@ -53,29 +52,25 @@ class _ProductScreenState extends State<ProductScreen> {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             Navigator.pop(context);
-            if (!_hasShownError) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                final messenger = ScaffoldMessenger.of(context);
 
-                messenger.showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      snapshot.error is InvalidUrlException
-                          ? (snapshot.error as InvalidUrlException).toString()
-                          : 'Ein unbekannter Fehler ist aufgetreten',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onErrorContainer,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              final messenger = ScaffoldMessenger.of(context);
+              messenger.hideCurrentSnackBar(); // Aktuelle SnackBar schließen
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(
+                    snapshot.error is InvalidUrlException
+                        ? (snapshot.error as InvalidUrlException).toString()
+                        : 'Ein unbekannter Fehler ist aufgetreten',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onErrorContainer,
                     ),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.errorContainer,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                );
-              });
-
-              _hasShownError = true;
-            }
+                  backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                ),
+              );
+            });
 
             return Center(child: Text(snapshot.error.toString()));
           } else {
