@@ -19,8 +19,6 @@ class _ScanScreenState extends State<ScanScreen> {
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  String? _lastScanned;
-
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -117,19 +115,20 @@ class _ScanScreenState extends State<ScanScreen> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      // Scanne nicht doppelt
-      if (_lastScanned == scanData.code!) return;
+    controller.scannedDataStream.listen((scanData) async {
+      // Kamera pausieren, damit nicht doppelt gescannt wird
+      await controller.pauseCamera();
 
-      Navigator.push(
+      // Weiter zur Produktansicht
+      await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ProductScreen(url: scanData.code!),
         ),
       );
 
-      // Update damit nicht doppelt gescanned wird
-      _lastScanned == scanData.code!;
+      // Nach dem Zurückkehren Kamera wieder aktivieren
+      await controller.resumeCamera();
     });
   }
 
