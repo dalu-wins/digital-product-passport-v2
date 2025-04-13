@@ -59,7 +59,7 @@ class _ScanScreenState extends State<ScanScreen> {
             child: FutureBuilder<bool?>(
               future: controller?.getFlashStatus(),
               builder: (BuildContext context, AsyncSnapshot<bool?> snapshot) {
-                if (snapshot.hasData && snapshot.data == true) {
+                if (snapshot.hasData && snapshot.data == false) {
                   return Icon(Icons.flash_on);
                 } else {
                   return Icon(Icons.flash_off);
