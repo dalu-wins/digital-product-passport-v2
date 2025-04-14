@@ -1,4 +1,4 @@
-import 'package:digital_product_passport/src/core/data/information.dart';
+import 'package:digital_product_passport/src/product/data/information.dart';
 
 class Product {
   final List<Uri> images;
