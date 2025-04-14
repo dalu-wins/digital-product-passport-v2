@@ -1,3 +1,4 @@
+import 'package:digital_product_passport/src/product/presentation/product_screen.dart';
 import 'package:digital_product_passport/src/scan/presentation/widgets/enter_url_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,21 @@ class ImportOptions extends StatelessWidget {
             title: Text('Upload File'),
             onTap: () => Navigator.pop(context),
           ),
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text("Debugging"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductScreen(
+                    url: "https://192.168.0.67:444/api/v3.0/submodels/",
+                  ),
+                ),
+              );
+            },
+          )
         ],
       ),
     );

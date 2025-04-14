@@ -1,4 +1,9 @@
-import 'package:digital_product_passport/src/product/presentation/invalid_url_exception.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/io_client.dart';
+
+import 'package:digital_product_passport/src/product/presentation/exceptions/invalid_url_exception.dart';
+import 'package:digital_product_passport/src/product/presentation/exceptions/loading_exception.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -22,10 +27,28 @@ class _ProductScreenState extends State<ProductScreen> {
   Future<String?> _loadData(String url) async {
     if (!isValidUrl(url)) return Future.error(InvalidUrlException(url));
 
-    // Lade Daten von Webseite hier
-    await Future.delayed(Duration(seconds: 2)); // Simuliere Ladedauer
+    final uri = Uri.parse(url);
 
-    return "server response"; // Simulierte Antwort
+    // Ignoriere Zertifikatsprüfung (nicht für Produktion!)
+    final httpClient = HttpClient()
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+    final ioClient = IOClient(httpClient);
+
+    try {
+      final response = await ioClient.get(uri);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data.toString(); // angepasst, da `data` kein `String` ist
+      } else {
+        return Future.error(LoadingException(response.statusCode.toString()));
+      }
+    } catch (e) {
+      return Future.error(e);
+    } finally {
+      ioClient.close();
+    }
   }
 
   bool isValidUrl(String url) {
@@ -76,7 +99,7 @@ class _ProductScreenState extends State<ProductScreen> {
           } else {
             return Center(
               child: Text(
-                'Geladene URL: ${snapshot.data}',
+                snapshot.data.toString(),
                 style: TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
