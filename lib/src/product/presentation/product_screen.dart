@@ -40,7 +40,19 @@ class _ProductScreenState extends State<ProductScreen> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data.toString(); // angepasst, da `data` kein `String` ist
+
+        // Bisher einfachheitshalber nur die ID-Shorts ausgeben
+        final List<String> ids = [];
+
+        if (data is Map && data['result'] is List) {
+          for (var item in data['result']) {
+            if (item is Map && item.containsKey('idShort')) {
+              ids.add(item['idShort']);
+            }
+          }
+        }
+
+        return ids.toString();
       } else {
         return Future.error(LoadingException(response.statusCode.toString()));
       }
