@@ -1,3 +1,5 @@
+import 'package:digital_product_passport/src/core/data/information.dart';
+
 class Product {
   final List<Uri> images;
   final List<Information> allInformation;
