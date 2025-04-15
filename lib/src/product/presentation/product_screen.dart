@@ -6,6 +6,8 @@ import 'package:digital_product_passport/src/product/presentation/exceptions/inv
 import 'package:digital_product_passport/src/product/presentation/exceptions/loading_exception.dart';
 import 'package:flutter/material.dart';
 
+// import 'package:http/http.dart' as http;
+
 class ProductScreen extends StatefulWidget {
   final String url;
 
@@ -29,10 +31,12 @@ class _ProductScreenState extends State<ProductScreen> {
 
     final uri = Uri.parse(url);
 
-    // Ignoriere Zertifikatsprüfung (nicht für Produktion!)
+    // Deaktiviert die Zertifikatvalidierung (Achtung: Nur für Entwicklung!)
     final httpClient = HttpClient()
       ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+          (X509Certificate cert, String host, int port) =>
+              true; // Always trust the certificate
+
     final ioClient = IOClient(httpClient);
 
     try {
@@ -41,7 +45,7 @@ class _ProductScreenState extends State<ProductScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        // Bisher einfachheitshalber nur die ID-Shorts ausgeben
+        // Einfachheitshalber nur die ID-Shorts ausgeben
         final List<String> ids = [];
 
         if (data is Map && data['result'] is List) {
@@ -62,6 +66,37 @@ class _ProductScreenState extends State<ProductScreen> {
       ioClient.close();
     }
   }
+
+  // Future<String?> _loadData(String url) async {
+  //   if (!isValidUrl(url)) return Future.error(InvalidUrlException(url));
+
+  //   final uri = Uri.parse(url);
+
+  //   try {
+  //     final response = await http.get(uri); // Nutze den Standard-HTTP-Client
+
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+
+  //       // Nur die idShorts extrahieren
+  //       final List<String> ids = [];
+
+  //       if (data is Map && data['result'] is List) {
+  //         for (var item in data['result']) {
+  //           if (item is Map && item.containsKey('idShort')) {
+  //             ids.add(item['idShort']);
+  //           }
+  //         }
+  //       }
+
+  //       return ids.toString();
+  //     } else {
+  //       return Future.error(LoadingException(response.statusCode.toString()));
+  //     }
+  //   } catch (e) {
+  //     return Future.error(e);
+  //   }
+  // }
 
   bool isValidUrl(String url) {
     final urlPattern = r'^(https?:\/\/)?' // http:// oder https:// (optional)
@@ -94,9 +129,7 @@ class _ProductScreenState extends State<ProductScreen> {
               messenger.showSnackBar(
                 SnackBar(
                   content: Text(
-                    snapshot.error is InvalidUrlException
-                        ? (snapshot.error as InvalidUrlException).toString()
-                        : 'Ein unbekannter Fehler ist aufgetreten',
+                    snapshot.error.toString(),
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onErrorContainer,
                     ),
