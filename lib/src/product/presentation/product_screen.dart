@@ -96,7 +96,10 @@ class _ProductScreenState extends State<ProductScreen> {
 
               return Center(child: Text(snapshot.error.toString()));
             } else {
-              return JsonView(json: snapshot.data?.submodels[0]);
+              return JsonView(
+                json: snapshot.data!.submodels[0],
+                controller: ScrollController(),
+              );
             }
           },
         ),
