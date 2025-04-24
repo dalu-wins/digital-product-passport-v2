@@ -34,12 +34,6 @@ class _ScanScreenState extends State<ScanScreen> {
   }
 
   @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Column(
@@ -85,7 +79,7 @@ class _ScanScreenState extends State<ScanScreen> {
       ),
       body: Stack(alignment: Alignment.center, children: [
         _buildQrView(context),
-        // TODO: ScanLabel(),
+        //ScanLabel(),
       ]),
     );
   }
@@ -120,12 +114,7 @@ class _ScanScreenState extends State<ScanScreen> {
       await controller.pauseCamera();
 
       // Weiter zur Produktansicht
-      await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProductScreen(url: scanData.code!),
-        ),
-      );
+      await openProduct(scanData.code!);
 
       // Nach dem Zurückkehren Kamera wieder aktivieren
       await controller.resumeCamera();
@@ -139,5 +128,14 @@ class _ScanScreenState extends State<ScanScreen> {
         const SnackBar(content: Text('no Permission')),
       );
     }
+  }
+
+  Future<void> openProduct(String prouctUrl) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductScreen(url: prouctUrl),
+      ),
+    );
   }
 }

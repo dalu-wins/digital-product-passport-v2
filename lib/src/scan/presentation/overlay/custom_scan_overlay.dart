@@ -7,44 +7,16 @@ import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
   CustomQrScannerOverlayShape({
-    this.borderColor = Colors.red,
-    this.borderWidth = 3.0,
-    this.overlayColor = const Color.fromRGBO(0, 0, 0, 0.5),
-    this.borderRadius = 0,
-    this.borderLength = 40,
-    double? cutOutSize,
-    double? cutOutWidth,
-    double? cutOutHeight,
-    this.cutOutBottomOffset = 0,
-  })  : cutOutWidth = cutOutWidth ?? cutOutSize ?? 250,
-        cutOutHeight = cutOutHeight ?? cutOutSize ?? 250 {
-    assert(
-      borderLength <=
-          min(this.cutOutWidth, this.cutOutHeight) / 2 + borderWidth * 2,
-      "Border can't be larger than ${min(this.cutOutWidth, this.cutOutHeight) / 2 + borderWidth * 2}",
-    );
-    assert(
-        (cutOutWidth == null && cutOutHeight == null) ||
-            (cutOutSize == null && cutOutWidth != null && cutOutHeight != null),
-        'Use only cutOutWidth and cutOutHeight or only cutOutSize');
-  }
-
-  @override
-  final Color borderColor;
-  @override
-  final double borderWidth;
-  @override
-  final Color overlayColor;
-  @override
-  final double borderRadius;
-  @override
-  final double borderLength;
-  @override
-  final double cutOutWidth;
-  @override
-  final double cutOutHeight;
-  @override
-  final double cutOutBottomOffset;
+    super.borderColor,
+    super.borderWidth,
+    super.overlayColor,
+    super.borderRadius,
+    super.borderLength,
+    super.cutOutSize,
+    super.cutOutWidth,
+    super.cutOutHeight,
+    super.cutOutBottomOffset,
+  });
 
   final double borderRadiusToFixEdges = 2;
 
@@ -60,14 +32,14 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    Path _getLeftTopPath(Rect rect) {
+    Path getLeftTopPath(Rect rect) {
       return Path()
         ..moveTo(rect.left, rect.bottom)
         ..lineTo(rect.left, rect.top)
         ..lineTo(rect.right, rect.top);
     }
 
-    return _getLeftTopPath(rect)
+    return getLeftTopPath(rect)
       ..lineTo(
         rect.right,
         rect.bottom,
@@ -88,14 +60,15 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
     final borderWidthSize = width / 2;
     final height = rect.height;
     final borderOffset = borderWidth / 2;
-    final _borderLength =
-        borderLength > min(cutOutHeight, cutOutHeight) / 2 + borderWidth * 2
-            ? borderWidthSize / 2
-            : borderLength;
-    final _cutOutWidth =
-        cutOutWidth < width ? cutOutWidth : width - borderOffset;
-    final _cutOutHeight =
-        cutOutHeight < height ? cutOutHeight : height - borderOffset;
+    final borderLength = super.borderLength >
+            min(super.cutOutHeight, super.cutOutHeight) / 2 + borderWidth * 2
+        ? borderWidthSize / 2
+        : super.borderLength;
+    final cutOutWidth =
+        super.cutOutWidth < width ? super.cutOutWidth : width - borderOffset;
+    final cutOutHeight = super.cutOutHeight < height
+        ? super.cutOutHeight
+        : height - borderOffset;
 
     final backgroundPaint = Paint()
       ..color = overlayColor
@@ -113,14 +86,14 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
       ..blendMode = BlendMode.dstOut;
 
     final cutOutRect = Rect.fromLTWH(
-      rect.left + width / 2 - _cutOutWidth / 2 + borderOffset,
+      rect.left + width / 2 - cutOutWidth / 2 + borderOffset,
       -cutOutBottomOffset +
           rect.top +
           height / 2 -
-          _cutOutHeight / 2 +
+          cutOutHeight / 2 +
           borderOffset,
-      _cutOutWidth - borderOffset * 2,
-      _cutOutHeight - borderOffset * 2,
+      cutOutWidth - borderOffset * 2,
+      cutOutHeight - borderOffset * 2,
     );
 
     canvas
@@ -135,10 +108,10 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
       // Draw top right corner
       ..drawRRect(
         RRect.fromLTRBAndCorners(
-          cutOutRect.right - _borderLength,
+          cutOutRect.right - borderLength,
           cutOutRect.top,
           cutOutRect.right,
-          cutOutRect.top + _borderLength,
+          cutOutRect.top + borderLength,
           topRight: Radius.circular(borderRadius),
           topLeft: Radius.circular(borderRadiusToFixEdges),
           bottomRight: Radius.circular(borderRadiusToFixEdges),
@@ -150,8 +123,8 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
         RRect.fromLTRBAndCorners(
           cutOutRect.left,
           cutOutRect.top,
-          cutOutRect.left + _borderLength,
-          cutOutRect.top + _borderLength,
+          cutOutRect.left + borderLength,
+          cutOutRect.top + borderLength,
           topLeft: Radius.circular(borderRadius),
           bottomLeft: Radius.circular(borderRadiusToFixEdges),
           topRight: Radius.circular(borderRadiusToFixEdges),
@@ -161,8 +134,8 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
       // Draw bottom right corner
       ..drawRRect(
         RRect.fromLTRBAndCorners(
-          cutOutRect.right - _borderLength,
-          cutOutRect.bottom - _borderLength,
+          cutOutRect.right - borderLength,
+          cutOutRect.bottom - borderLength,
           cutOutRect.right,
           cutOutRect.bottom,
           bottomRight: Radius.circular(borderRadius),
@@ -175,8 +148,8 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
       ..drawRRect(
         RRect.fromLTRBAndCorners(
           cutOutRect.left,
-          cutOutRect.bottom - _borderLength,
-          cutOutRect.left + _borderLength,
+          cutOutRect.bottom - borderLength,
+          cutOutRect.left + borderLength,
           cutOutRect.bottom,
           bottomLeft: Radius.circular(borderRadius),
           bottomRight: Radius.circular(borderRadiusToFixEdges),
@@ -192,14 +165,5 @@ class CustomQrScannerOverlayShape extends QrScannerOverlayShape {
         boxPaint,
       )
       ..restore();
-  }
-
-  @override
-  ShapeBorder scale(double t) {
-    return CustomQrScannerOverlayShape(
-      borderColor: borderColor,
-      borderWidth: borderWidth,
-      overlayColor: overlayColor,
-    );
   }
 }
