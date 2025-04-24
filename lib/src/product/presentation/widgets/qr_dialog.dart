@@ -6,7 +6,11 @@ class QrDialog extends StatelessWidget {
   const QrDialog({super.key, required this.url});
   @override
   Widget build(BuildContext context) {
+    Color qrColor = Colors.black;
+    Color qrBgColor = Colors.white;
+
     return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       title: Text('QR Code'),
       content: Column(
         spacing: 8,
@@ -20,10 +24,16 @@ class QrDialog extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white, // Background color
+                  color: qrBgColor, // Background color
                   borderRadius: BorderRadius.circular(16), // Rounded corners
                 ),
                 child: QrImageView(
+                  eyeStyle: QrEyeStyle(
+                    color: qrColor,
+                  ),
+                  dataModuleStyle: QrDataModuleStyle(
+                    color: qrColor,
+                  ),
                   data: url,
                   version: QrVersions.auto,
                   size: 150.0,
