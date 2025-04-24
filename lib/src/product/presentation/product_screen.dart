@@ -50,42 +50,45 @@ class _ProductScreenState extends State<ProductScreen> {
       appBar: AppBar(
         title: Text('Product Screen'),
       ),
-      body: FutureBuilder<Product>(
-        future: _dataFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            Navigator.pop(context);
+      body: SafeArea(
+        child: FutureBuilder<Product>(
+          future: _dataFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              Navigator.pop(context);
 
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              final messenger = ScaffoldMessenger.of(context);
-              messenger.hideCurrentSnackBar(); // Aktuelle SnackBar schließen
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(
-                    snapshot.error.toString(),
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onErrorContainer,
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                final messenger = ScaffoldMessenger.of(context);
+                messenger.hideCurrentSnackBar(); // Aktuelle SnackBar schließen
+                messenger.showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onErrorContainer,
+                      ),
+                      //overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.errorContainer,
                   ),
-                  backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                );
+              });
+
+              return Center(child: Text(snapshot.error.toString()));
+            } else {
+              return Center(
+                child: Text(
+                  snapshot.data.toString(),
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
                 ),
               );
-            });
-
-            return Center(child: Text(snapshot.error.toString()));
-          } else {
-            return Center(
-              child: Text(
-                snapshot.data.toString(),
-                style: TextStyle(fontSize: 18),
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
-        },
+            }
+          },
+        ),
       ),
     );
   }

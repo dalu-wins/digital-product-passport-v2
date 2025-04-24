@@ -1,14 +1,14 @@
 class Product {
   final String id;
   final String idShort;
-  final List<dynamic> submodelIds;
+  final List<dynamic> submodels;
   Product({
     required this.id,
     required this.idShort,
-    required this.submodelIds,
+    required this.submodels,
   });
   @override
   String toString() {
-    return submodelIds.toString();
+    return submodels.toString();
   }
 }
