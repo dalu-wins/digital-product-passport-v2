@@ -2,7 +2,9 @@ import 'package:digital_product_passport/src/product/data/product.dart';
 import 'package:digital_product_passport/src/product/domain/product_loader.dart';
 
 import 'package:digital_product_passport/src/product/presentation/exceptions/invalid_url_exception.dart';
+import 'package:digital_product_passport/src/product/presentation/widgets/qr_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 // import 'package:http/http.dart' as http;
 
@@ -49,6 +51,21 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Product Screen'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return QrDialog(
+                    url: widget.url,
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.qr_code),
+          ),
+        ],
       ),
       body: SafeArea(
         child: FutureBuilder<Product>(
