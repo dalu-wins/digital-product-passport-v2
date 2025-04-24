@@ -4,6 +4,7 @@ import 'package:digital_product_passport/src/product/domain/product_loader.dart'
 import 'package:digital_product_passport/src/product/presentation/exceptions/invalid_url_exception.dart';
 import 'package:digital_product_passport/src/product/presentation/widgets/qr_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:json_view/json_view.dart';
 
 // import 'package:http/http.dart' as http;
 
@@ -95,13 +96,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
               return Center(child: Text(snapshot.error.toString()));
             } else {
-              return Center(
-                child: Text(
-                  snapshot.data.toString(),
-                  style: TextStyle(fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-              );
+              return JsonView(json: snapshot.data?.submodels[0]);
             }
           },
         ),

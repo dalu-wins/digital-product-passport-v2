@@ -7,8 +7,4 @@ class Product {
     required this.idShort,
     required this.submodels,
   });
-  @override
-  String toString() {
-    return submodels.toString();
-  }
 }
