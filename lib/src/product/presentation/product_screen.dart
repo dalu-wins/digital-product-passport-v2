@@ -1,9 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:http/io_client.dart';
+import 'package:digital_product_passport/src/product/data/product.dart';
+import 'package:digital_product_passport/src/product/domain/product_loader.dart';
 
 import 'package:digital_product_passport/src/product/presentation/exceptions/invalid_url_exception.dart';
-import 'package:digital_product_passport/src/product/presentation/exceptions/loading_exception.dart';
 import 'package:flutter/material.dart';
 
 // import 'package:http/http.dart' as http;
@@ -18,85 +16,22 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  late Future<String?> _dataFuture;
+  late Future<Product> _dataFuture;
 
   @override
   void initState() {
     super.initState();
-    _dataFuture = _loadData(widget.url);
+    _dataFuture = _loadProduct(widget.url);
   }
 
-  Future<String?> _loadData(String url) async {
+  Future<Product> _loadProduct(String url) async {
     if (!isValidUrl(url)) return Future.error(InvalidUrlException(url));
 
     final uri = Uri.parse(url);
-
-    // Deaktiviert die Zertifikatvalidierung (Achtung: Nur für Entwicklung!)
-    final httpClient = HttpClient()
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) =>
-              true; // Always trust the certificate
-
-    final ioClient = IOClient(httpClient);
-
-    try {
-      final response = await ioClient.get(uri);
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        // Einfachheitshalber nur die ID-Shorts ausgeben
-        final List<String> ids = [];
-
-        if (data is Map && data['result'] is List) {
-          for (var item in data['result']) {
-            if (item is Map && item.containsKey('idShort')) {
-              ids.add(item['idShort']);
-            }
-          }
-        }
-
-        return ids.toString();
-      } else {
-        return Future.error(LoadingException(response.statusCode.toString()));
-      }
-    } catch (e) {
-      return Future.error(e);
-    } finally {
-      ioClient.close();
-    }
+    ProductLoader productLoader = ProductLoader(uri: uri);
+    Future<Product> product = productLoader.loadProduct();
+    return product;
   }
-
-  // Future<String?> _loadData(String url) async {
-  //   if (!isValidUrl(url)) return Future.error(InvalidUrlException(url));
-
-  //   final uri = Uri.parse(url);
-
-  //   try {
-  //     final response = await http.get(uri); // Nutze den Standard-HTTP-Client
-
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-
-  //       // Nur die idShorts extrahieren
-  //       final List<String> ids = [];
-
-  //       if (data is Map && data['result'] is List) {
-  //         for (var item in data['result']) {
-  //           if (item is Map && item.containsKey('idShort')) {
-  //             ids.add(item['idShort']);
-  //           }
-  //         }
-  //       }
-
-  //       return ids.toString();
-  //     } else {
-  //       return Future.error(LoadingException(response.statusCode.toString()));
-  //     }
-  //   } catch (e) {
-  //     return Future.error(e);
-  //   }
-  // }
 
   bool isValidUrl(String url) {
     final urlPattern = r'^(https?:\/\/)?' // http:// oder https:// (optional)
@@ -115,7 +50,7 @@ class _ProductScreenState extends State<ProductScreen> {
       appBar: AppBar(
         title: Text('Product Screen'),
       ),
-      body: FutureBuilder<String?>(
+      body: FutureBuilder<Product>(
         future: _dataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

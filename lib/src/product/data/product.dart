@@ -1,12 +1,14 @@
-import 'package:digital_product_passport/src/product/data/information.dart';
-
 class Product {
-  final List<Uri> images;
-  final List<Information> allInformation;
-  final List<Information> keyInformation;
+  final String id;
+  final String idShort;
+  final List<dynamic> submodelIds;
   Product({
-    required this.images,
-    required this.allInformation,
-    required this.keyInformation,
+    required this.id,
+    required this.idShort,
+    required this.submodelIds,
   });
+  @override
+  String toString() {
+    return submodelIds.toString();
+  }
 }

@@ -41,7 +41,8 @@ class ImportOptions extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => ProductScreen(
-                    url: "https://192.168.0.67:444/api/v3.0/shells/",
+                    url:
+                        "https://192.168.0.67:444/api/v3.0/shells/aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vMjU5MV84MDAyXzcwNDJfNDU4MA==",
                   ),
                 ),
               );
