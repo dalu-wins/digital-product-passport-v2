@@ -33,7 +33,7 @@ class ImportOptions extends StatelessWidget {
           //   onTap: () => Navigator.pop(context),
           // ),
           ListTile(
-            leading: Icon(Icons.delete),
+            leading: Icon(Icons.smartphone),
             title: Text("Debugging: Smartphone"),
             onTap: () {
               Navigator.pop(context);
@@ -47,7 +47,55 @@ class ImportOptions extends StatelessWidget {
                 ),
               );
             },
-          )
+          ),
+          ListTile(
+            leading: Icon(Icons.checkroom),
+            title: Text("Debugging: Textile"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductScreen(
+                    url:
+                        "https://192.168.0.67:444/api/v3.0/shells/aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vNzI0NF84MDAyXzcwNDJfNzk2OA==",
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.battery_std),
+            title: Text("Debugging: Battery"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductScreen(
+                    url:
+                        "https://192.168.0.67:444/api/v3.0/shells/aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vOTE0M184MDAyXzcwNDJfNTE4OA==",
+                  ),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text("Debugging: Puzzle"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductScreen(
+                    url:
+                        "https://192.168.0.67:444/api/v3.0/shells/aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vMDA0M18wMjUxXzgwNDJfOTgyMA==",
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
