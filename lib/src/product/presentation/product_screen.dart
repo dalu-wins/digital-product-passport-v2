@@ -4,7 +4,6 @@ import 'package:digital_product_passport/src/product/domain/product_loader.dart'
 import 'package:digital_product_passport/src/product/presentation/exceptions/invalid_url_exception.dart';
 import 'package:digital_product_passport/src/product/presentation/widgets/qr_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 // import 'package:http/http.dart' as http;
 
