@@ -12,16 +12,6 @@ class Property extends SubmodelElement {
     super.displayName,
   });
 
-  Widget getInformationText(BuildContext context) {
-    return Text(
-      value?.isNotEmpty == true ? value! : "no data",
-      style: TextStyle(color: Theme.of(context).colorScheme.primary),
-      maxLines: 10,
-      overflow: TextOverflow.ellipsis,
-      textAlign: TextAlign.end,
-    );
-  }
-
   @override
   Widget display(BuildContext context) {
     return Card.filled(
@@ -44,7 +34,12 @@ class Property extends SubmodelElement {
             // Value
             Expanded(
               flex: 1,
-              child: getInformationText(context),
+              child: Text(
+                value?.isNotEmpty == true ? value! : "no data",
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                maxLines: 10,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

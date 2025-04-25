@@ -30,7 +30,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
     final uri = Uri.parse(url);
     ProductLoader productLoader = ProductLoader(uri: uri);
-    Future<Product> product = productLoader.loadProduct();
+    Future<Product> product = productLoader.loadProduct(context);
     return product;
   }
 

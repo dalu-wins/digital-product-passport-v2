@@ -48,5 +48,5 @@ class SubmodelElementCollection extends SubmodelElement {
   }
 
   @override
-  int get sortOrder => 2;
+  int get sortOrder => 3;
 }

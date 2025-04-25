@@ -14,6 +14,9 @@ class AASElement {
   });
 
   String splitCamelCase(String input) {
+    // if (input.isEmpty || input[0] != input[0].toUpperCase()) {
+    //   return input; // bleibt unverändert wenn mit lowercase anfängt
+    // }
     return input.replaceAllMapped(
       RegExp(r'(?<=[a-z])(?=[A-Z])'),
       (match) => ' ',

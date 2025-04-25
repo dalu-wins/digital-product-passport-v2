@@ -5,6 +5,7 @@ import 'package:digital_product_passport/src/faaast_flutter/models/submodel.dart
 import 'package:digital_product_passport/src/faaast_flutter/parser/submodel_parser.dart';
 import 'package:digital_product_passport/src/product/data/product.dart';
 import 'package:digital_product_passport/src/product/presentation/exceptions/loading_exception.dart';
+import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
 
 class ProductLoader {
@@ -49,7 +50,7 @@ class ProductLoader {
     }
   }
 
-  Future<Product> loadProduct() async {
+  Future<Product> loadProduct(BuildContext context) async {
     // Deaktiviert die Zertifikatvalidierung (Achtung: Nur für Entwicklung!)
     final httpClient = HttpClient()
       ..badCertificateCallback =
@@ -78,7 +79,7 @@ class ProductLoader {
             .toList());
 
         List<Submodel> submodels = submodelData
-            .map((submodel) => SubmodelParser.parse(submodel))
+            .map((submodel) => SubmodelParser.parse(submodel, context))
             .toList();
 
         return Product(
