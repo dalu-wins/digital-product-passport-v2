@@ -10,7 +10,6 @@ class QrDialog extends StatelessWidget {
     Color qrBgColor = Colors.white;
 
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       title: Text('QR Code'),
       content: Column(
         spacing: 8,

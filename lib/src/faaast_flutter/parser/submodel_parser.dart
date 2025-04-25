@@ -1,0 +1,20 @@
+import 'package:digital_product_passport/src/faaast_flutter/models/submodel.dart';
+import 'package:digital_product_passport/src/faaast_flutter/models/submodel_element.dart';
+import 'package:digital_product_passport/src/faaast_flutter/parser/submodel_element_parser.dart';
+
+class SubmodelParser {
+  static Submodel parse(Map submodelToParse) {
+    List<SubmodelElement> submodelElements = [];
+    if (submodelToParse['submodelElements'] is List) {
+      for (var element in submodelToParse['submodelElements']) {
+        submodelElements.add(SubmodelElementParser.parse(element));
+      }
+    }
+
+    return Submodel(
+      kind: submodelToParse['kind'],
+      submodelElements: submodelElements,
+      idShort: submodelToParse['idShort'],
+    );
+  }
+}

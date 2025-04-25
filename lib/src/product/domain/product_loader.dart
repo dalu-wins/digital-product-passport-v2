@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:digital_product_passport/src/faaast_flutter/models/submodel.dart';
+import 'package:digital_product_passport/src/faaast_flutter/parser/submodel_parser.dart';
 import 'package:digital_product_passport/src/product/data/product.dart';
 import 'package:digital_product_passport/src/product/presentation/exceptions/loading_exception.dart';
 import 'package:http/io_client.dart';
@@ -75,10 +77,14 @@ class ProductLoader {
             .map((submodelUrl) => getSubmodelData(submodelUrl))
             .toList());
 
+        List<Submodel> submodels = submodelData
+            .map((submodel) => SubmodelParser.parse(submodel))
+            .toList();
+
         return Product(
           id: shellData['id'],
           idShort: shellData['idShort'],
-          submodels: submodelData,
+          submodels: submodels,
         );
       } else {
         return Future.error(LoadingException(response.statusCode.toString()));

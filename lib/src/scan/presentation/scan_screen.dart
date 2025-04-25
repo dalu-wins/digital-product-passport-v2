@@ -42,6 +42,7 @@ class _ScanScreenState extends State<ScanScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'flash_button',
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer,
             onPressed: () async {
@@ -60,6 +61,7 @@ class _ScanScreenState extends State<ScanScreen> {
             ),
           ),
           FloatingActionButton.extended(
+            heroTag: 'import_button',
             label: Text("Import"),
             icon: Icon(Icons.add),
             onPressed: () {
