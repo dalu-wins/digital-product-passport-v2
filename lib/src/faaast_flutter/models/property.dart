@@ -12,25 +12,40 @@ class Property extends SubmodelElement {
     super.displayName,
   });
 
-  Widget getInformationText() {
-    if (value == null) return Text("no data");
-    if (value!.isEmpty) return Text("no data");
-    return Text(value!);
+  Widget getInformationText(BuildContext context) {
+    return Text(
+      value?.isNotEmpty == true ? value! : "no data",
+      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+      maxLines: 10,
+      overflow: TextOverflow.ellipsis,
+      textAlign: TextAlign.end,
+    );
   }
 
   @override
   Widget display(BuildContext context) {
     return Card.filled(
-      color: Theme.of(context).colorScheme.secondaryContainer,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              super.getDisplayName(),
+            // Name
+            Expanded(
+              flex: 1,
+              child: Text(
+                super.getDisplayName(),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 10,
+              ),
             ),
-            getInformationText()
+            const SizedBox(width: 16),
+            // Value
+            Expanded(
+              flex: 1,
+              child: getInformationText(context),
+            ),
           ],
         ),
       ),

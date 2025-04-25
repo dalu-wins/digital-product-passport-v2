@@ -13,12 +13,19 @@ class AASElement {
     this.displayName,
   });
 
+  String splitCamelCase(String input) {
+    return input.replaceAllMapped(
+      RegExp(r'(?<=[a-z])(?=[A-Z])'),
+      (match) => ' ',
+    );
+  }
+
   String getDisplayName() {
     String text = 'no name found';
     if (displayName != null) {
       text = displayName!;
     } else if (idShort != null) {
-      text = idShort!;
+      text = splitCamelCase(idShort!);
     } else if (id != null) {
       text = id!;
     }
