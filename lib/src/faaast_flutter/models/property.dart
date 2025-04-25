@@ -1,6 +1,8 @@
 import 'package:digital_product_passport/src/faaast_flutter/models/submodel_element.dart';
 import 'package:flutter/material.dart';
 
+//TODO remove later, just for testing gpg sign
+
 class Property extends SubmodelElement {
   final String? valueType;
   final String? value;
