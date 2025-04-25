@@ -88,8 +88,7 @@ class MultiLanguageProperty extends SubmodelElement {
               flex: 1,
               child: Text(
                 getDisplayName(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 10,
+                softWrap: true,
               ),
             ),
             const SizedBox(width: 16),
@@ -99,8 +98,7 @@ class MultiLanguageProperty extends SubmodelElement {
               child: Text(
                 getValue(),
                 style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 10,
+                softWrap: true,
               ),
             ),
           ],

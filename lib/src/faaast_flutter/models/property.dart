@@ -26,8 +26,7 @@ class Property extends SubmodelElement {
               flex: 1,
               child: Text(
                 super.getDisplayName(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 10,
+                softWrap: true,
               ),
             ),
             const SizedBox(width: 16),
@@ -37,8 +36,7 @@ class Property extends SubmodelElement {
               child: Text(
                 value?.isNotEmpty == true ? value! : "no data",
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                maxLines: 10,
-                overflow: TextOverflow.ellipsis,
+                softWrap: true,
               ),
             ),
           ],

@@ -20,7 +20,9 @@ class _AASElementListScreenState extends State<AASElementListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.elementName),
+        title: Text(
+          widget.elementName,
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

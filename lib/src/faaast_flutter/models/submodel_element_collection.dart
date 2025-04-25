@@ -24,9 +24,14 @@ class SubmodelElementCollection extends SubmodelElement {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(super.getDisplayName()),
+            Expanded(
+              child: Text(
+                super.getDisplayName(),
+                softWrap: true,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
             IconButton(
               onPressed: () {
                 Navigator.push(
@@ -40,7 +45,7 @@ class SubmodelElementCollection extends SubmodelElement {
                 );
               },
               icon: Icon(Icons.chevron_right),
-            )
+            ),
           ],
         ),
       ),
