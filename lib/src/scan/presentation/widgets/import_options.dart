@@ -48,24 +48,6 @@ class ImportOptions extends StatelessWidget {
               );
             },
           ),
-          // TODO remove - just for testing code lines workflow
-          ListTile(
-            leading: Icon(Icons.smartphone),
-            title: Text(
-                "Debugging: Smartphone 1 just for testing codelines workflow"),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProductScreen(
-                    url:
-                        "https://192.168.0.67:444/api/v3.0/shells/aHR0cHM6Ly9leGFtcGxlLmNvbS9pZHMvc20vMjU5MV84MDAyXzcwNDJfNDU4MA==",
-                  ),
-                ),
-              );
-            },
-          ),
           ListTile(
             leading: Icon(Icons.checkroom),
             title: Text("Debugging: Textile"),
