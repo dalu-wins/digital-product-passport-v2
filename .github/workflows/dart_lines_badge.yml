@@ -9,6 +9,7 @@ on:
         - main
         paths-ignore:
         - dart-lines-badge.svg
+        - README.md
     workflow_dispatch:
 
 jobs:
