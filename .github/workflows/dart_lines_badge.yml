@@ -1,0 +1,42 @@
+name: Count Dart Code Lines
+
+on:
+    push:
+        branches:
+        - main
+        paths-ignore:
+        - dart-lines-badge.svg
+    workflow_dispatch:
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cloc
+        run: sudo apt-get install -y cloc
+
+      - name: Count Dart lines
+        run: |
+          cloc --include-lang=Dart --json . > cloc-report.json
+          
+      - name: Create badge
+        run: |
+          DART_LINES=$(cat cloc-report.json | jq '.Dart.code')
+          echo "DART_LINES=$DART_LINES" >> $GITHUB_ENV
+          
+      - name: Update README badge (experimental)
+        uses: emibcn/badge-action@v2
+        with:
+          label: "Dart Lines"
+          status: "${{ env.DART_LINES }}"
+          color: "blue"
+          path: "dart-lines-badge.svg"
+          
+      - name: Commit badge
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add dart-lines-badge.svg
+          git diff --cached --quiet || (git commit -m "Update Dart lines badge [skip ci]" && git push)
