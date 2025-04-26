@@ -9,6 +9,7 @@ on:
         - main
         paths-ignore:
         - dart-lines-badge.svg
+        - .github/workflows/flutter_build.yml
         - README.md
     workflow_dispatch:
 
