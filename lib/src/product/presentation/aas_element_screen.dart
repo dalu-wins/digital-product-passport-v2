@@ -33,19 +33,19 @@ class _AASElementListScreenState extends State<AASElementListScreen> {
   Widget displayContent() {
     List<Widget> displayedElements =
         widget.elements.map((element) => element.display(context)).toList();
-    if (widget.elementName == 'Images') {
-      return ConstrainedBox(
-        constraints: const BoxConstraints(maxHeight: 200),
-        child: CarouselView(
-            itemSnapping: true,
-            itemExtent: 330,
-            shrinkExtent: 200,
-            children: displayedElements),
-      );
-    } else {
-      return Column(
-        children: displayedElements,
-      );
-    }
+    // if (widget.elementName == 'Images') {
+    //   return ConstrainedBox(
+    //     constraints: const BoxConstraints(maxHeight: 200),
+    //     child: CarouselView(
+    //         itemSnapping: true,
+    //         itemExtent: 330,
+    //         shrinkExtent: 200,
+    //         children: displayedElements),
+    //   );
+    // } else {
+    return Column(
+      children: displayedElements,
+    );
+    // }
   }
 }
