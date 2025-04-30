@@ -15,9 +15,6 @@ class AASElementListScreen extends StatefulWidget {
 class _AASElementListScreenState extends State<AASElementListScreen> {
   @override
   Widget build(BuildContext context) {
-    List<Widget> displayedElements =
-        widget.elements.map((element) => element.display(context)).toList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -27,11 +24,28 @@ class _AASElementListScreenState extends State<AASElementListScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Column(
-            children: displayedElements,
-          ),
+          child: displayContent(),
         ),
       ),
     );
+  }
+
+  Widget displayContent() {
+    List<Widget> displayedElements =
+        widget.elements.map((element) => element.display(context)).toList();
+    if (widget.elementName == 'Images') {
+      return ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 200),
+        child: CarouselView(
+            itemSnapping: true,
+            itemExtent: 330,
+            shrinkExtent: 200,
+            children: displayedElements),
+      );
+    } else {
+      return Column(
+        children: displayedElements,
+      );
+    }
   }
 }

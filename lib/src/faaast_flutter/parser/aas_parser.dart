@@ -1,4 +1,5 @@
 import 'package:digital_product_passport/src/faaast_flutter/models/aas_element.dart';
+import 'package:digital_product_passport/src/faaast_flutter/parser/file_parser.dart';
 import 'package:digital_product_passport/src/faaast_flutter/parser/multi_language_property_parser.dart';
 import 'package:digital_product_passport/src/faaast_flutter/parser/property_parser.dart';
 import 'package:digital_product_passport/src/faaast_flutter/parser/submodel_element_collection_parser.dart';
@@ -17,6 +18,8 @@ class AASParser {
           return PropertyParser.parse(elementToParse);
         case 'MultiLanguageProperty':
           return MultiLanguagePropertyParser.parse(elementToParse, context);
+        case 'File':
+          return FileParser.parse(elementToParse);
         default:
           return AASElement();
       }
