@@ -33,39 +33,62 @@ class Product {
           )
           .toList();
     }
-
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 200),
-      child: CarouselView(
-        itemSnapping: true,
-        itemExtent: 330,
-        shrinkExtent: 200,
-        children: displayedElements,
-        onTap: (int index) {
-          showDialog(
-            context: context,
-            builder: (_) => Dialog(
-              backgroundColor: Colors.black,
-              insetPadding: EdgeInsets.zero,
-              child: InteractiveViewer(
-                child: Center(
-                  child: displayedElements[index],
-                ),
-              ),
+    return Column(
+      spacing: 8,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text(
+            "Images",
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 200),
+          child: CarouselView(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(28)),
+              side: BorderSide(
+                  color: Theme.of(context).colorScheme.outlineVariant),
             ),
-          );
-        },
-      ),
+            itemSnapping: true,
+            itemExtent: 300,
+            children: displayedElements
+                .map((element) => Padding(
+                      padding: EdgeInsets.all(8),
+                      child: element,
+                    ))
+                .toList(),
+            onTap: (int index) {
+              showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                  backgroundColor: Colors.black,
+                  insetPadding: EdgeInsets.zero,
+                  child: InteractiveViewer(
+                    child: Center(
+                      child: displayedElements[index],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
   // TODO Don't hardcode it
   Widget buildGeneralSection(BuildContext context) {
     return Column(
+      spacing: 8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             "General",
             style: Theme.of(context).textTheme.bodyLarge,
@@ -146,10 +169,11 @@ class Product {
   // TODO Don't hardcode it!
   Widget buildDetailSection(BuildContext context) {
     return Column(
+      spacing: 8,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             "Details",
             style: Theme.of(context).textTheme.bodyLarge,
@@ -176,7 +200,7 @@ class Product {
                         '6.3"',
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                   ],
@@ -195,7 +219,7 @@ class Product {
                         "4000 mAh",
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                   ],
@@ -214,7 +238,7 @@ class Product {
                         "LiPo",
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                   ],
@@ -233,7 +257,7 @@ class Product {
                         "iOS 18.0.1",
                         softWrap: true,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     ),
                   ],

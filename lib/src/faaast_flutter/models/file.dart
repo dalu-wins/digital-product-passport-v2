@@ -31,21 +31,20 @@ class File extends SubmodelElement {
   }
 
   Widget displayImage(context) {
-    return Container(
-      width: double.infinity, // oder feste Größe
-      height: 300, // Beispielhöhe
-      color: Colors.white, // Hintergrundfarbe
-      alignment: Alignment.center,
-      child: Image.network(
-        value!,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return CircularProgressIndicator();
-        },
-        errorBuilder: (context, error, stackTrace) {
-          return Text('Failed to load image');
-        },
-      ),
+    return Image.network(
+      value!,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) return child;
+        return CircularProgressIndicator();
+      },
+      errorBuilder: (context, error, stackTrace) {
+        return Text(
+          'Failed to load image',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.error,
+          ),
+        );
+      },
     );
   }
 }
