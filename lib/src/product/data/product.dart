@@ -56,20 +56,6 @@ class Product {
             itemSnapping: true,
             itemExtent: 300,
             children: displayedElements,
-            onTap: (int index) {
-              showDialog(
-                context: context,
-                builder: (_) => Dialog(
-                  backgroundColor: Colors.black,
-                  insetPadding: EdgeInsets.zero,
-                  child: InteractiveViewer(
-                    child: Center(
-                      child: displayedElements[index],
-                    ),
-                  ),
-                ),
-              );
-            },
           ),
         ),
       ],
