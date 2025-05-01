@@ -33,10 +33,6 @@ class File extends SubmodelElement {
   Widget displayImage(context) {
     return Image.network(
       value!,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
-        return CircularProgressIndicator();
-      },
       errorBuilder: (context, error, stackTrace) {
         return Container(
           color: Theme.of(context).colorScheme.errorContainer,
