@@ -55,12 +55,7 @@ class Product {
             ),
             itemSnapping: true,
             itemExtent: 300,
-            children: displayedElements
-                .map((element) => Padding(
-                      padding: EdgeInsets.all(8),
-                      child: element,
-                    ))
-                .toList(),
+            children: displayedElements,
             onTap: (int index) {
               showDialog(
                 context: context,

@@ -38,10 +38,15 @@ class File extends SubmodelElement {
         return CircularProgressIndicator();
       },
       errorBuilder: (context, error, stackTrace) {
-        return Text(
-          'Failed to load image',
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.error,
+        return Container(
+          color: Theme.of(context).colorScheme.errorContainer,
+          child: Center(
+            child: Text(
+              'Failed to load image',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onErrorContainer,
+              ),
+            ),
           ),
         );
       },
